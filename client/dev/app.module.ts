@@ -32,7 +32,7 @@ import { ColorPicker } from './note/components/color-picker';
       NoteService,
     ],
     bootstrap: [
-      Note
+      Note,
     ],
 })
 export class AppModule {}
