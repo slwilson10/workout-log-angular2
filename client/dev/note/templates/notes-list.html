@@ -1,0 +1,9 @@
+<md-grid-list cols="4" class="notes" gutterSize="10px" class="notes-list">
+  <md-grid-tile *ngFor="let note of notes; let i = index">
+    <note-card
+      class="note"
+      (onChecked)="check($event)"
+      [note]='note'>
+    </note-card>
+  </md-grid-tile>
+</md-grid-list>

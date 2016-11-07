@@ -1,0 +1,10 @@
+<nav-bar></nav-bar>
+<div class="creator">
+  <note-creator
+    (createNote)="onCreateNote($event)">
+  </note-creator>
+</div>
+<notes-list
+  [notes]="notes"
+  (onChecked)="onChecked($event)">
+</notes-list>
