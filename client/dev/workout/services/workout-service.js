@@ -26,6 +26,7 @@ var WorkoutService = (function () {
     WorkoutService.prototype.create = function (workout) {
         var _messageStringified = JSON.stringify(workout);
         var headers = new http_1.Headers();
+        console.log(_messageStringified);
         headers.append('Content-Type', 'application/json');
         return this._http
             .post(WorkoutService.ENDPOINT.replace(':id', ''), _messageStringified, { headers: headers })

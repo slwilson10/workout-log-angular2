@@ -17,9 +17,11 @@ var WorkoutHistory = (function () {
     }
     WorkoutHistory.prototype.ngOnInit = function () { };
     WorkoutHistory.prototype.delete = function (id) {
+        console.log('Deleting');
         this.onDelete.next(id);
     };
     WorkoutHistory.prototype.update = function (workout) {
+        console.log('Updating');
         this.onUpdate.next(workout);
     };
     __decorate([

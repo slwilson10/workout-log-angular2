@@ -22,6 +22,7 @@ export class WorkoutRow implements OnInit{
   }
 
   update(model) {
+    console.log('Updating');
     this.onUpdate.next(model);
     this.edit();
   }

@@ -1,8 +1,18 @@
-.date-picker-body {
-  width: 60%;
-}
-
+.date-picker-buttons,
+.date-picker-calendar,
 .field {
   display: inline-block;
-  width: 32%;
+}
+
+.date-picker-calendar {
+  width: 60%;
+  text-align: right;
+}
+
+.date-picker-buttons {
+  width: 38%;
+}
+
+.form-group {
+  margin: 0;
 }

@@ -21,6 +21,7 @@ var WorkoutRow = (function () {
         this.editing = !this.editing;
     };
     WorkoutRow.prototype.update = function (model) {
+        console.log('Updating');
         this.onUpdate.next(model);
         this.edit();
     };

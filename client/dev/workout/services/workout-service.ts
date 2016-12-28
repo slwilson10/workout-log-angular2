@@ -24,9 +24,8 @@ export class WorkoutService {
     let _messageStringified = JSON.stringify(workout);
 
     let headers = new Headers();
-
+    console.log(_messageStringified);
     headers.append('Content-Type', 'application/json');
-
     return this._http
                .post(WorkoutService.ENDPOINT.replace(':id', ''), _messageStringified, {headers})
                .map((r) => r.json());

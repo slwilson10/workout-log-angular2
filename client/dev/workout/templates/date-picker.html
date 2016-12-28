@@ -1,12 +1,12 @@
-<div class="date-picker-body">
+<div class="date-picker-container">
 
-<div class="field">
-  <button class="btn btn-info" click="submit">Week</button>
-  <button class="btn btn-info" click="submit">Month</button>
-  <button class="btn btn-info" click="submit">Year</button>
+<div class="date-picker-buttons">
+  <button class="btn btn-info" (click)="dateButtonClick(pastWeek)">Week</button>
+  <button class="btn btn-info" (click)="dateButtonClick(pastMonth)">Month</button>
+  <button class="btn btn-info" (click)="dateButtonClick(pastYear)">Year</button>
 </div>
 
-
+<div class="date-picker-calendar">
 <form [formGroup]="dateRangeForm" novalidate (ngSubmit)="setDateRange(dateRangeForm.value)">
   <div class="form-group row">
     <div class="field">
@@ -20,4 +20,5 @@
     </div>
   </div>
 </form>
+</div>
 </div>

@@ -13,14 +13,14 @@ import * as moment from 'moment';
 export class WorkoutLog implements OnInit {
   // Create empty array for workouts
   workouts: WorkoutModel[] = [];
+  filteredWorkouts: WorkoutModel[] = [];
   public dateRange= {
     'startDate': moment().subtract(7,'days').format('YYYY-MM-DD'),
-    'endDate': moment().format('YYYY-MM-DD')
+    'endDate': moment().add(1,'days').format('YYYY-MM-DD')
   };
   constructor(private _workoutService: WorkoutService) {}
 
   ngOnInit() {
-    // Run on init
     this._getAll();
   }
 
@@ -30,6 +30,7 @@ export class WorkoutLog implements OnInit {
         .getAll()
         .subscribe((workouts) => {
           this.workouts = workouts;
+          this.setDateRange(this.dateRange);
         });
   }
 
@@ -39,6 +40,7 @@ export class WorkoutLog implements OnInit {
         .create(workout)
         .subscribe((n) => {
           this.workouts.push(n);
+          this.setDateRange(this.dateRange);
         });
   }
 
@@ -67,13 +69,18 @@ export class WorkoutLog implements OnInit {
             if (w._id === id)
               return this.workouts.splice(i, 1);
           });
+          this.setDateRange(this.dateRange);
         })
   }
 
   // Create new workout through service
   setDateRange(dateRange):void {
+    this.filteredWorkouts = [];
+    for (let w of this.workouts) {
+      if(w.date >= dateRange.startDate && w.date <= dateRange.endDate){
+        this.filteredWorkouts.push(w);
+      }
+    }
     this.dateRange = dateRange;
-    console.log("start date: " + this.dateRange.startDate);
-    console.log("end date: " + this.dateRange.endDate);
   }
 }

@@ -16,13 +16,13 @@ var WorkoutLog = (function () {
         this._workoutService = _workoutService;
         // Create empty array for workouts
         this.workouts = [];
+        this.filteredWorkouts = [];
         this.dateRange = {
             'startDate': moment().subtract(7, 'days').format('YYYY-MM-DD'),
-            'endDate': moment().format('YYYY-MM-DD')
+            'endDate': moment().add(1, 'days').format('YYYY-MM-DD')
         };
     }
     WorkoutLog.prototype.ngOnInit = function () {
-        // Run on init
         this._getAll();
     };
     // Populate workouts through service
@@ -32,6 +32,7 @@ var WorkoutLog = (function () {
             .getAll()
             .subscribe(function (workouts) {
             _this.workouts = workouts;
+            _this.setDateRange(_this.dateRange);
         });
     };
     // Create new workout through service
@@ -41,6 +42,7 @@ var WorkoutLog = (function () {
             .create(workout)
             .subscribe(function (n) {
             _this.workouts.push(n);
+            _this.setDateRange(_this.dateRange);
         });
     };
     WorkoutLog.prototype.update = function (workout) {
@@ -69,13 +71,19 @@ var WorkoutLog = (function () {
                 if (w._id === id)
                     return _this.workouts.splice(i, 1);
             });
+            _this.setDateRange(_this.dateRange);
         });
     };
     // Create new workout through service
     WorkoutLog.prototype.setDateRange = function (dateRange) {
+        this.filteredWorkouts = [];
+        for (var _i = 0, _a = this.workouts; _i < _a.length; _i++) {
+            var w = _a[_i];
+            if (w.date >= dateRange.startDate && w.date <= dateRange.endDate) {
+                this.filteredWorkouts.push(w);
+            }
+        }
         this.dateRange = dateRange;
-        console.log("start date: " + this.dateRange.startDate);
-        console.log("end date: " + this.dateRange.endDate);
     };
     WorkoutLog = __decorate([
         core_1.Component({

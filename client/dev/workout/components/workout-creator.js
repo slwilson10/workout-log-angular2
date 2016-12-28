@@ -22,8 +22,13 @@ var WorkoutCreator = (function () {
     };
     // Run save createWorkout event if form is valid, then reset
     WorkoutCreator.prototype.create = function (model, isValid) {
+        console.log('Creating');
         this.submitted = true;
         if (isValid) {
+            // Set date to datetime using current time and timezone
+            var dateTime = moment(model.date).format('YYYY-MM-DD') + 'T' +
+                moment().format('HH:mm:ssZ');
+            model.date = dateTime;
             this.onCreate.next(model);
             this.reset();
         }

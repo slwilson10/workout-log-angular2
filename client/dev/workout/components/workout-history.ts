@@ -21,10 +21,12 @@ export class WorkoutHistory implements OnInit {
   ngOnInit(){}
 
   delete(id) {
+    console.log('Deleting');
     this.onDelete.next(id);
   }
 
   update(workout) {
+    console.log('Updating');
     this.onUpdate.next(workout);
   }
 }

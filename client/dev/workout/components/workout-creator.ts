@@ -1,7 +1,4 @@
-import { Component,
-  Input,
-  Output,
-  EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import * as moment from 'moment';
 
@@ -27,13 +24,18 @@ export class WorkoutCreator {
 
   // Run save createWorkout event if form is valid, then reset
   create(model: WorkoutModel, isValid: boolean) {
-        this.submitted = true;
-
-        if(isValid){
-          this.onCreate.next(model);
-          this.reset();
-        }
+    console.log('Creating');
+    this.submitted = true;
+    if(isValid){
+      // Set date to datetime using current time and timezone
+      let dateTime =
+        moment(model.date).format('YYYY-MM-DD') + 'T' +
+        moment().format('HH:mm:ssZ');
+      model.date = dateTime;
+      this.onCreate.next(model);
+      this.reset();
     }
+  }
 
   // Set input text to blank
   reset() {

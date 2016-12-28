@@ -7,7 +7,7 @@
   </md-card>
   <md-card>
     <workout-history
-      [workouts]="workouts"
+      [workouts]="filteredWorkouts"
       (onDelete)="delete($event)"
       (onUpdate)="update($event)">
     </workout-history>

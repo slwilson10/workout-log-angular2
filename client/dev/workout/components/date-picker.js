@@ -16,21 +16,34 @@ var DatePicker = (function () {
         this._fb = _fb;
         this.onSetDateRange = new core_1.EventEmitter();
         this.events = []; // use later to display form changes
+        this.curDate = moment().format('YYYY-MM-DD');
+        this.pastWeek = moment().subtract(7, 'days').format('YYYY-MM-DD');
+        this.pastMonth = moment().subtract(1, 'months').format('YYYY-MM-DD');
+        this.pastYear = moment().subtract(1, 'years').format('YYYY-MM-DD');
     } // form builder simplify form initialization
+    // Run inilazation functions
     DatePicker.prototype.ngOnInit = function () {
-        this.reset();
+        this.setCalendarPicker(this.pastWeek, this.curDate);
     };
-    // Run save createWorkout event if form is valid, then reset
-    DatePicker.prototype.setDateRange = function (dateRange) {
-        this.onSetDateRange.next(dateRange);
+    // Pass date from button click to setDateRange and setCalendarPicker
+    DatePicker.prototype.dateButtonClick = function (date) {
+        this.setDateRange({
+            'startDate': date,
+            'endDate': this.curDate
+        });
+        this.setCalendarPicker(date, this.curDate);
     };
-    // Set input text to blank
-    DatePicker.prototype.reset = function () {
+    // Set form inputs for calendar picker
+    DatePicker.prototype.setCalendarPicker = function (startDate, endDate) {
         this.submitted = false;
         this.dateRangeForm = this._fb.group({
-            startDate: [moment().subtract(7, 'days').format('YYYY-MM-DD')],
-            endDate: [moment().format('YYYY-MM-DD')]
+            startDate: [startDate],
+            endDate: [endDate]
         });
+    };
+    // Pass date object to parent component
+    DatePicker.prototype.setDateRange = function (dateRange) {
+        this.onSetDateRange.next(dateRange);
     };
     __decorate([
         core_1.Output(), 
