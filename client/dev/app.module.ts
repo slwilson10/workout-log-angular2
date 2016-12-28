@@ -1,38 +1,47 @@
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
-import { FormsModule, FormBuilder } from '@angular/forms';
+import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule  } from '@angular/platform-browser';
 import { MaterialModule } from '@angular/material';
 
-import { Note }   from './note/components/note';
-import { NoteService }   from './note/services/note-service';
+import { WorkoutLog }   from './workout/components/workout-log';
+import { WorkoutService }   from './workout/services/workout-service';
 
-import { NavBar } from './note/components/nav-bar';
-import { NoteCreator } from './note/components/note-creator';
-import { NotesList } from './note/components/notes-list';
-import { NoteCard } from './note/components/note-card';
-import { ColorPicker } from './note/components/color-picker';
+import { NavBar } from './workout/components/nav-bar';
+import { DatePicker } from './workout/components/date-picker';
+import { WorkoutCreator } from './workout/components/workout-creator';
+import { WorkoutEditor } from './workout/components/workout-editor';
+import { WorkoutHistory } from './workout/components/workout-history';
+import { WorkoutRow } from './workout/components/workout-row';
+import { Workout } from './workout/components/workout';
+
+import { OrderBy } from './workout/pipes/orderBy';
+
 
 @NgModule({
     imports: [
       BrowserModule,
       FormsModule,
+      ReactiveFormsModule,
       HttpModule,
       MaterialModule.forRoot()
     ],
    declarations: [
-      Note,
+      WorkoutLog,
       NavBar,
-      NoteCreator,
-      NotesList,
-      NoteCard,
-      ColorPicker
+      DatePicker,
+      WorkoutCreator,
+      WorkoutEditor,
+      WorkoutHistory,
+      WorkoutRow,
+      Workout,
+      OrderBy
     ],
     providers: [
-      NoteService,
+      WorkoutService,
     ],
     bootstrap: [
-      Note,
+      WorkoutLog,
     ],
 })
 export class AppModule {}

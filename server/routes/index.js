@@ -1,11 +1,11 @@
 "use strict";
 
-const NotesRoutes = require('../api/note/routes/note-routes');
+const WorkoutsRoutes = require('../api/workout/routes/workout-routes');
 
 
 module.exports = class Routes {
    static init(app, router) {
-     NotesRoutes.init(router);
+     WorkoutsRoutes.init(router);
 
 
      app.use('/', router);

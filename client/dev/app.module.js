@@ -8,47 +8,53 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require("@angular/core");
-var http_1 = require("@angular/http");
-var forms_1 = require("@angular/forms");
-var platform_browser_1 = require("@angular/platform-browser");
-var material_1 = require("@angular/material");
-var note_1 = require("./note/components/note");
-var note_service_1 = require("./note/services/note-service");
-var nav_bar_1 = require("./note/components/nav-bar");
-var note_creator_1 = require("./note/components/note-creator");
-var notes_list_1 = require("./note/components/notes-list");
-var note_card_1 = require("./note/components/note-card");
-var color_picker_1 = require("./note/components/color-picker");
+var core_1 = require('@angular/core');
+var http_1 = require('@angular/http');
+var forms_1 = require('@angular/forms');
+var platform_browser_1 = require('@angular/platform-browser');
+var material_1 = require('@angular/material');
+var workout_log_1 = require('./workout/components/workout-log');
+var workout_service_1 = require('./workout/services/workout-service');
+var nav_bar_1 = require('./workout/components/nav-bar');
+var date_picker_1 = require('./workout/components/date-picker');
+var workout_creator_1 = require('./workout/components/workout-creator');
+var workout_editor_1 = require('./workout/components/workout-editor');
+var workout_history_1 = require('./workout/components/workout-history');
+var workout_row_1 = require('./workout/components/workout-row');
+var workout_1 = require('./workout/components/workout');
+var orderBy_1 = require('./workout/pipes/orderBy');
 var AppModule = (function () {
     function AppModule() {
     }
+    AppModule = __decorate([
+        core_1.NgModule({
+            imports: [
+                platform_browser_1.BrowserModule,
+                forms_1.FormsModule,
+                forms_1.ReactiveFormsModule,
+                http_1.HttpModule,
+                material_1.MaterialModule.forRoot()
+            ],
+            declarations: [
+                workout_log_1.WorkoutLog,
+                nav_bar_1.NavBar,
+                date_picker_1.DatePicker,
+                workout_creator_1.WorkoutCreator,
+                workout_editor_1.WorkoutEditor,
+                workout_history_1.WorkoutHistory,
+                workout_row_1.WorkoutRow,
+                workout_1.Workout,
+                orderBy_1.OrderBy
+            ],
+            providers: [
+                workout_service_1.WorkoutService,
+            ],
+            bootstrap: [
+                workout_log_1.WorkoutLog,
+            ],
+        }), 
+        __metadata('design:paramtypes', [])
+    ], AppModule);
     return AppModule;
 }());
-AppModule = __decorate([
-    core_1.NgModule({
-        imports: [
-            platform_browser_1.BrowserModule,
-            forms_1.FormsModule,
-            http_1.HttpModule,
-            material_1.MaterialModule.forRoot()
-        ],
-        declarations: [
-            note_1.Note,
-            nav_bar_1.NavBar,
-            note_creator_1.NoteCreator,
-            notes_list_1.NotesList,
-            note_card_1.NoteCard,
-            color_picker_1.ColorPicker
-        ],
-        providers: [
-            note_service_1.NoteService,
-        ],
-        bootstrap: [
-            note_1.Note,
-        ],
-    }),
-    __metadata("design:paramtypes", [])
-], AppModule);
 exports.AppModule = AppModule;
-//# sourceMappingURL=app.module.js.map

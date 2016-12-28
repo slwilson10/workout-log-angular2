@@ -1,1 +1,0 @@
-<div class="color-selector"><md-icon (click)="showSelector()" class="material-icons icon">color_lens</md-icon><md-grid-list cols="4" *ngIf="isSelectorVisible" class="selector"><md-grid-tile *ngFor="let color of colors" [ngStyle]="{'background-color': color}" (click)="selectColor(color)"></md-grid-tile></md-grid-list></div>

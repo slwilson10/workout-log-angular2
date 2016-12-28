@@ -21,6 +21,8 @@ System.config({
     '@angular/material': 'npm:@angular/material/material.umd.js',
 
     // other libraries
-    'rxjs':                       'npm:rxjs'
+    'rxjs': 'npm:rxjs',
+    'moment': 'npm:moment/moment.js',
+    'bootstrap': 'npm:bootstrap/dist/js/bootstrap.min.js'
   }
 });

@@ -1,0 +1,10 @@
+div {
+  width: 60%;
+  margin: auto;
+  background-color: white;
+  padding: 2%;
+}
+
+md-card {
+  margin: 2% auto;
+}

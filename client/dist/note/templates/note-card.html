@@ -1,1 +1,0 @@
-<md-card [ngStyle]="{'background-color': note.color}" (mouseenter)="toggle()" (mouseleave)="toggle()"><md-icon class="icon" *ngIf="showCheck" (click)="check()"><i class="material-icons">done</i></md-icon><md-card-title class="title">{{ note.title }}</md-card-title><md-card-content class="value"><p>{{ note.content }}</p></md-card-content></md-card>

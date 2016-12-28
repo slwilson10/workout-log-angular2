@@ -1,0 +1,20 @@
+<nav-bar></nav-bar>
+<div>
+  <md-card>
+    <date-picker
+      (onSetDateRange)="setDateRange($event)">
+    </date-picker>
+  </md-card>
+  <md-card>
+    <workout-history
+      [workouts]="workouts"
+      (onDelete)="delete($event)"
+      (onUpdate)="update($event)">
+    </workout-history>
+  </md-card>
+  <md-card>
+    <workout-creator
+      (onCreate)="create($event)"><
+    </workout-creator>
+  </md-card>
+</div>
