@@ -39,7 +39,7 @@ var WorkoutEditor = (function () {
         this.submitted = false;
         this.myForm = this._fb.group({
             id: [this.workout._id],
-            name: [this.workout.name, [forms_1.Validators.required, forms_1.Validators.minLength(5)]],
+            name: [this.workout.name, [forms_1.Validators.required, forms_1.Validators.minLength(1)]],
             date: [moment(this.workout.date).format('YYYY-MM-DD')],
             duration: this._fb.group({
                 hours: [this.workout.duration[0].hours],

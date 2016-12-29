@@ -1,7 +1,4 @@
-import { Component,
-  Input,
-  Output,
-  EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import * as moment from 'moment';
 
@@ -48,7 +45,7 @@ export class WorkoutEditor {
     this.submitted = false;
     this.myForm = this._fb.group({
             id: [this.workout._id],
-            name: [this.workout.name, [<any>Validators.required, <any>Validators.minLength(5)]],
+            name: [this.workout.name, [<any>Validators.required, <any>Validators.minLength(1)]],
             date: [moment(this.workout.date).format('YYYY-MM-DD')],
             duration: this._fb.group({
                 hours: [this.workout.duration[0].hours],

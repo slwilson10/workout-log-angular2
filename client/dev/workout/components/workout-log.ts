@@ -15,8 +15,8 @@ export class WorkoutLog implements OnInit {
   workouts: WorkoutModel[] = [];
   filteredWorkouts: WorkoutModel[] = [];
   public dateRange= {
-    'startDate': moment().subtract(7,'days').format('YYYY-MM-DD'),
-    'endDate': moment().add(1,'days').format('YYYY-MM-DD')
+    'startDate': moment().subtract(7,'days').format(),
+    'endDate': moment().add(1,'days').format()
   };
   constructor(private _workoutService: WorkoutService) {}
 
@@ -24,7 +24,7 @@ export class WorkoutLog implements OnInit {
     this._getAll();
   }
 
-  // Populate workouts through service
+  // Populate workouts through service, set dateRange
   private _getAll():void {
     this._workoutService
         .getAll()
@@ -36,6 +36,7 @@ export class WorkoutLog implements OnInit {
 
   // Create new workout through service
   create(workout):void {
+    console.log('creating: ' + workout);
     this._workoutService
         .create(workout)
         .subscribe((n) => {
@@ -44,38 +45,40 @@ export class WorkoutLog implements OnInit {
         });
   }
 
+  // Update model through service call, update model in components
   update(workout):void {
-    console.log('Log: ');
-    let id;
+    console.log('Updating: ' + workout);
     this._workoutService
-        .update(workout)
-        .subscribe((workout) => {
-          this.workouts.forEach((w, i) => {
-            if (w._id === workout[0]){
-              console.log('Yes!');
-              return this.workouts.splice(i, 1, workout[1]);
-            }
-          });
-        })
+      .update(workout)
+      .subscribe((workout) => {
+        this.workouts.forEach((w, i) => {
+          if (w._id === workout[0]){
+            return this.workouts.splice(i, 1, workout[1]);
+          }
+        });
+        this.setDateRange(this.dateRange);
+      })
   }
 
-  // Create new workout through service
+  // Delete through service call, update models and dateRange
   delete(id):void {
-    console.log('Log Deleting: ' + id);
+    console.log('Deleting: ' + id);
     this._workoutService
         .delete(id)
         .subscribe(() => {
           this.workouts.forEach((w, i) => {
-            if (w._id === id)
+            if (w._id === id){
               return this.workouts.splice(i, 1);
+            }
           });
           this.setDateRange(this.dateRange);
         })
   }
 
-  // Create new workout through service
+  // Loop through all workouts, pull those inside of dateRange
+  // Set parent component's dateRange to passed value
   setDateRange(dateRange):void {
-    this.filteredWorkouts = [];
+    this.filteredWorkouts = []; // Clear array before adding new
     for (let w of this.workouts) {
       if(w.date >= dateRange.startDate && w.date <= dateRange.endDate){
         this.filteredWorkouts.push(w);

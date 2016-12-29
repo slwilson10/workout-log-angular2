@@ -16,10 +16,10 @@ var DatePicker = (function () {
         this._fb = _fb;
         this.onSetDateRange = new core_1.EventEmitter();
         this.events = []; // use later to display form changes
-        this.curDate = moment().format('YYYY-MM-DD');
-        this.pastWeek = moment().subtract(7, 'days').format('YYYY-MM-DD');
-        this.pastMonth = moment().subtract(1, 'months').format('YYYY-MM-DD');
-        this.pastYear = moment().subtract(1, 'years').format('YYYY-MM-DD');
+        this.curDate = moment().format();
+        this.pastWeek = moment().subtract(7, 'days').format();
+        this.pastMonth = moment().subtract(1, 'months').format();
+        this.pastYear = moment().subtract(1, 'years').format();
     } // form builder simplify form initialization
     // Run inilazation functions
     DatePicker.prototype.ngOnInit = function () {
@@ -37,12 +37,16 @@ var DatePicker = (function () {
     DatePicker.prototype.setCalendarPicker = function (startDate, endDate) {
         this.submitted = false;
         this.dateRangeForm = this._fb.group({
-            startDate: [startDate],
-            endDate: [endDate]
+            // Format dates to match calendar input requirment
+            startDate: [moment(startDate).format('YYYY-MM-DD')],
+            endDate: [moment(endDate).format('YYYY-MM-DD')]
         });
     };
     // Pass date object to parent component
     DatePicker.prototype.setDateRange = function (dateRange) {
+        // Format dates to include timezone
+        dateRange.startDate = moment(dateRange.startDate).startOf('day').format();
+        dateRange.endDate = moment(dateRange.endDate).endOf('day').format();
         this.onSetDateRange.next(dateRange);
     };
     __decorate([

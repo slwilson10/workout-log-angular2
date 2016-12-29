@@ -10,6 +10,7 @@ import { WorkoutService }   from './workout/services/workout-service';
 import { NavBar } from './workout/components/nav-bar';
 import { DatePicker } from './workout/components/date-picker';
 import { WorkoutCreator } from './workout/components/workout-creator';
+import { WorkoutPicker } from './workout/components/workout-picker';
 import { WorkoutEditor } from './workout/components/workout-editor';
 import { WorkoutHistory } from './workout/components/workout-history';
 import { WorkoutRow } from './workout/components/workout-row';
@@ -31,6 +32,7 @@ import { OrderBy } from './workout/pipes/orderBy';
       NavBar,
       DatePicker,
       WorkoutCreator,
+      WorkoutPicker,
       WorkoutEditor,
       WorkoutHistory,
       WorkoutRow,

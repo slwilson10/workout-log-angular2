@@ -16,10 +16,27 @@ export class WorkoutCreator {
   public submitted: boolean; // keep track on whether form is submitted
   public events: any[] = []; // use later to display form changes
 
+  public defaultWorkout = {
+    name: ['Workout', [<any>Validators.required, <any>Validators.minLength(1)]],
+    date: [moment().format('YYYY-MM-DD')],
+    duration: this._fb.group({
+      hours: [0],
+      minutes: [30]
+    }),
+    calories: [100],
+    distance: [0],
+    heartrate: [90],
+    zones: this._fb.group({
+      peak: [0],
+      cardio: [0],
+      fatburn: [0]
+    })
+  };
+
   constructor(private _fb: FormBuilder) { } // form builder simplify form initialization
 
   ngOnInit() {
-      this.reset();
+      this.setForm(this.defaultWorkout);
   }
 
   // Run save createWorkout event if form is valid, then reset
@@ -33,28 +50,13 @@ export class WorkoutCreator {
         moment().format('HH:mm:ssZ');
       model.date = dateTime;
       this.onCreate.next(model);
-      this.reset();
+      this.setForm(this.defaultWorkout);
     }
   }
 
   // Set input text to blank
-  reset() {
+  setForm(workout) {
     this.submitted = false;
-    this.myForm = this._fb.group({
-            name: ['Workout', [<any>Validators.required, <any>Validators.minLength(5)]],
-            date: [moment().format('YYYY-MM-DD')],
-            duration: this._fb.group({
-                hours: [0],
-                minutes: [30]
-            }),
-            calories: [100],
-            distance: [0],
-            heartrate: [90],
-            zones: this._fb.group({
-                peak: [0],
-                cardio: [0],
-                fatburn: [0]
-            }),
-        });
+    this.myForm = this._fb.group(workout);
   }
 }

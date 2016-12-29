@@ -18,6 +18,7 @@ var workout_service_1 = require('./workout/services/workout-service');
 var nav_bar_1 = require('./workout/components/nav-bar');
 var date_picker_1 = require('./workout/components/date-picker');
 var workout_creator_1 = require('./workout/components/workout-creator');
+var workout_picker_1 = require('./workout/components/workout-picker');
 var workout_editor_1 = require('./workout/components/workout-editor');
 var workout_history_1 = require('./workout/components/workout-history');
 var workout_row_1 = require('./workout/components/workout-row');
@@ -40,6 +41,7 @@ var AppModule = (function () {
                 nav_bar_1.NavBar,
                 date_picker_1.DatePicker,
                 workout_creator_1.WorkoutCreator,
+                workout_picker_1.WorkoutPicker,
                 workout_editor_1.WorkoutEditor,
                 workout_history_1.WorkoutHistory,
                 workout_row_1.WorkoutRow,

@@ -16,28 +16,8 @@ var WorkoutCreator = (function () {
         this._fb = _fb;
         this.onCreate = new core_1.EventEmitter();
         this.events = []; // use later to display form changes
-    } // form builder simplify form initialization
-    WorkoutCreator.prototype.ngOnInit = function () {
-        this.reset();
-    };
-    // Run save createWorkout event if form is valid, then reset
-    WorkoutCreator.prototype.create = function (model, isValid) {
-        console.log('Creating');
-        this.submitted = true;
-        if (isValid) {
-            // Set date to datetime using current time and timezone
-            var dateTime = moment(model.date).format('YYYY-MM-DD') + 'T' +
-                moment().format('HH:mm:ssZ');
-            model.date = dateTime;
-            this.onCreate.next(model);
-            this.reset();
-        }
-    };
-    // Set input text to blank
-    WorkoutCreator.prototype.reset = function () {
-        this.submitted = false;
-        this.myForm = this._fb.group({
-            name: ['Workout', [forms_1.Validators.required, forms_1.Validators.minLength(5)]],
+        this.defaultWorkout = {
+            name: ['Workout', [forms_1.Validators.required, forms_1.Validators.minLength(1)]],
             date: [moment().format('YYYY-MM-DD')],
             duration: this._fb.group({
                 hours: [0],
@@ -50,8 +30,29 @@ var WorkoutCreator = (function () {
                 peak: [0],
                 cardio: [0],
                 fatburn: [0]
-            }),
-        });
+            })
+        };
+    } // form builder simplify form initialization
+    WorkoutCreator.prototype.ngOnInit = function () {
+        this.setForm(this.defaultWorkout);
+    };
+    // Run save createWorkout event if form is valid, then reset
+    WorkoutCreator.prototype.create = function (model, isValid) {
+        console.log('Creating');
+        this.submitted = true;
+        if (isValid) {
+            // Set date to datetime using current time and timezone
+            var dateTime = moment(model.date).format('YYYY-MM-DD') + 'T' +
+                moment().format('HH:mm:ssZ');
+            model.date = dateTime;
+            this.onCreate.next(model);
+            this.setForm(this.defaultWorkout);
+        }
+    };
+    // Set input text to blank
+    WorkoutCreator.prototype.setForm = function (workout) {
+        this.submitted = false;
+        this.myForm = this._fb.group(workout);
     };
     __decorate([
         core_1.Output(), 

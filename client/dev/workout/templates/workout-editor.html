@@ -1,67 +1,64 @@
 <form [formGroup]="myForm" novalidate (ngSubmit)="update(myForm.value, myForm.valid)">
-<md-grid-list cols="20" rowHeight="80px">
-  <md-grid-tile></md-grid-tile>
-  <md-grid-tile colspan="4">
-    <input class="date form-control" type="date" formControlName="date">
-  </md-grid-tile>
-  <md-grid-tile colspan="2">
-    <input class="form-control" type="text" formControlName="name">
-    <small
-    [hidden]="myForm.controls.name.valid || (myForm.controls.name.pristine && !submitted)">
-    Name is required (minimum 5 characters).
-    </small>
-  </md-grid-tile>
+  <md-grid-list cols="20" rowHeight="80px">
+      <md-grid-tile colspan="4">
+        <input class="date form-control" type="date" formControlName="date">
+      </md-grid-tile>
+      <md-grid-tile colspan="2">
+        <input class="form-control" type="text" formControlName="name">
+        <small
+        [hidden]="myForm.controls.name.valid || (myForm.controls.name.pristine && !submitted)">
+        At least 1 character required.
+        </small>
+      </md-grid-tile>
 
-  <md-grid-tile colspan="2">
-  <input  class="form-control" type="number" formControlName="calories">
-  </md-grid-tile>
-  <md-grid-tile colspan="2">
-  <input class="form-control" type="number" formControlName="distance">
-  </md-grid-tile>
-  <md-grid-tile colspan="2">
-  <input class="form-control" type="number" formControlName="heartrate">
-  </md-grid-tile>
+      <md-grid-tile colspan="2">
+        <input  class="form-control" type="number" formControlName="calories">
+      </md-grid-tile>
+      <md-grid-tile colspan="2">
+        <input class="form-control" type="number" formControlName="distance">
+      </md-grid-tile>
+      <md-grid-tile colspan="2">
+        <input class="form-control" type="number" formControlName="heartrate">
+      </md-grid-tile>
 
-<md-grid-tile colspan="3">
-  <table class="small-table">
-    <tr>
-      <td formGroupName="zones">
-      <input class="form-control" type="number" formControlName="peak">
-      </td>
-      <td formGroupName="zones">
-      <input class="form-control" type="number" formControlName="cardio">
-      </td>
-      <td formGroupName="zones">
-      <input class="form-control" type="number" formControlName="fatburn">
-      </td>
-    </tr>
-  </table>
-</md-grid-tile>
+    <md-grid-tile colspan="3">
+      <table class="small-table">
+        <tr>
+          <td formGroupName="zones">
+          <input class="form-control" type="number" formControlName="peak">
+          </td>
+          <td formGroupName="zones">
+          <input class="form-control" type="number" formControlName="cardio">
+          </td>
+          <td formGroupName="zones">
+          <input class="form-control" type="number" formControlName="fatburn">
+          </td>
+        </tr>
+      </table>
+    </md-grid-tile>
 
-<md-grid-tile colspan="2">
-  <table class="small-table">
-  <tr>
-    <td formGroupName="duration" class="time">
-      <input class="form-control" type="number" formControlName="hours">
-    </td>
-    <td formGroupName="duration" class="time">
-    <input class="form-control" type="number" formControlName="minutes">
-    </td>
-  </tr>
-  </table>
-</md-grid-tile>
-
-<md-grid-tile colspan="2">
-<button type="submit" class="icon">
-<md-icon>
-<i class="material-icons">check</i>
-</md-icon>
-</button>
-<md-icon class="icon" (click)="edit()">
-<i class="material-icons">clear</i>
-</md-icon>
-</md-grid-tile>
-
-
-</md-grid-list>
+    <md-grid-tile colspan="2">
+      <table class="small-table">
+      <tr>
+        <td formGroupName="duration" class="time">
+          <input class="form-control" type="number" formControlName="hours">
+        </td>
+        <td formGroupName="duration" class="time">
+        <input class="form-control" type="number" formControlName="minutes">
+        </td>
+      </tr>
+      </table>
+    </md-grid-tile>
+    <md-grid-tile></md-grid-tile>
+    <md-grid-tile colspan="2">
+      <button type="submit" class="icon">
+        <md-icon>
+          <i class="material-icons">check</i>
+        </md-icon>
+      </button>
+      <md-icon class="icon" (click)="edit()">
+        <i class="material-icons">clear</i>
+      </md-icon>
+    </md-grid-tile>
+  </md-grid-list>
 </form>

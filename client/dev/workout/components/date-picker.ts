@@ -14,10 +14,10 @@ export class DatePicker {
   public dateRangeForm: FormGroup; // our model driven form
   public submitted: boolean; // keep track on whether form is submitted
   public events: any[] = []; // use later to display form changes
-  public curDate = moment().format('YYYY-MM-DD');
-  public pastWeek = moment().subtract(7,'days').format('YYYY-MM-DD');
-  public pastMonth = moment().subtract(1,'months').format('YYYY-MM-DD');
-  public pastYear = moment().subtract(1,'years').format('YYYY-MM-DD');
+  public curDate = moment().format();
+  public pastWeek = moment().subtract(7,'days').format();
+  public pastMonth = moment().subtract(1,'months').format();
+  public pastYear = moment().subtract(1,'years').format();
 
   // Run inilazation functions
   ngOnInit() {
@@ -40,13 +40,17 @@ export class DatePicker {
   setCalendarPicker(startDate, endDate) {
     this.submitted = false;
     this.dateRangeForm = this._fb.group({
-            startDate: [startDate],
-            endDate: [endDate]
+      // Format dates to match calendar input requirment
+      startDate: [moment(startDate).format('YYYY-MM-DD')],
+      endDate: [moment(endDate).format('YYYY-MM-DD')]
     });
   }
 
   // Pass date object to parent component
   setDateRange(dateRange) {
+    // Format dates to include timezone
+    dateRange.startDate = moment(dateRange.startDate).startOf('day').format();
+    dateRange.endDate = moment(dateRange.endDate).endOf('day').format();
     this.onSetDateRange.next(dateRange);
   }
 }

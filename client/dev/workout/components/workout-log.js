@@ -18,14 +18,14 @@ var WorkoutLog = (function () {
         this.workouts = [];
         this.filteredWorkouts = [];
         this.dateRange = {
-            'startDate': moment().subtract(7, 'days').format('YYYY-MM-DD'),
-            'endDate': moment().add(1, 'days').format('YYYY-MM-DD')
+            'startDate': moment().subtract(7, 'days').format(),
+            'endDate': moment().add(1, 'days').format()
         };
     }
     WorkoutLog.prototype.ngOnInit = function () {
         this._getAll();
     };
-    // Populate workouts through service
+    // Populate workouts through service, set dateRange
     WorkoutLog.prototype._getAll = function () {
         var _this = this;
         this._workoutService
@@ -38,6 +38,7 @@ var WorkoutLog = (function () {
     // Create new workout through service
     WorkoutLog.prototype.create = function (workout) {
         var _this = this;
+        console.log('creating: ' + workout);
         this._workoutService
             .create(workout)
             .subscribe(function (n) {
@@ -45,38 +46,40 @@ var WorkoutLog = (function () {
             _this.setDateRange(_this.dateRange);
         });
     };
+    // Update model through service call, update model in components
     WorkoutLog.prototype.update = function (workout) {
         var _this = this;
-        console.log('Log: ');
-        var id;
+        console.log('Updating: ' + workout);
         this._workoutService
             .update(workout)
             .subscribe(function (workout) {
             _this.workouts.forEach(function (w, i) {
                 if (w._id === workout[0]) {
-                    console.log('Yes!');
                     return _this.workouts.splice(i, 1, workout[1]);
                 }
-            });
-        });
-    };
-    // Create new workout through service
-    WorkoutLog.prototype.delete = function (id) {
-        var _this = this;
-        console.log('Log Deleting: ' + id);
-        this._workoutService
-            .delete(id)
-            .subscribe(function () {
-            _this.workouts.forEach(function (w, i) {
-                if (w._id === id)
-                    return _this.workouts.splice(i, 1);
             });
             _this.setDateRange(_this.dateRange);
         });
     };
-    // Create new workout through service
+    // Delete through service call, update models and dateRange
+    WorkoutLog.prototype.delete = function (id) {
+        var _this = this;
+        console.log('Deleting: ' + id);
+        this._workoutService
+            .delete(id)
+            .subscribe(function () {
+            _this.workouts.forEach(function (w, i) {
+                if (w._id === id) {
+                    return _this.workouts.splice(i, 1);
+                }
+            });
+            _this.setDateRange(_this.dateRange);
+        });
+    };
+    // Loop through all workouts, pull those inside of dateRange
+    // Set parent component's dateRange to passed value
     WorkoutLog.prototype.setDateRange = function (dateRange) {
-        this.filteredWorkouts = [];
+        this.filteredWorkouts = []; // Clear array before adding new
         for (var _i = 0, _a = this.workouts; _i < _a.length; _i++) {
             var w = _a[_i];
             if (w.date >= dateRange.startDate && w.date <= dateRange.endDate) {

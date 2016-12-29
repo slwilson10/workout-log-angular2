@@ -1,7 +1,6 @@
 <md-grid-list cols="20" rowHeight="50px">
-  <md-grid-tile></md-grid-tile>
   <md-grid-tile colspan="4">{{ workout.date | date: 'MM/dd/yyyy'}}</md-grid-tile>
-  <md-grid-tile colspan="2">{{ workout.name }}</md-grid-tile>
+  <md-grid-tile colspan="2"><span class="name">{{ workout.name }}</span></md-grid-tile>
   <md-grid-tile colspan="2">{{ workout.calories }}</md-grid-tile>
   <md-grid-tile colspan="2">{{ workout.distance }}</md-grid-tile>
   <md-grid-tile colspan="2">{{ workout.heartrate }}</md-grid-tile>
@@ -35,6 +34,7 @@
     </tr>
   </table>
   </md-grid-tile>
+  <md-grid-tile></md-grid-tile>
   <md-grid-tile colspan="2">
       <md-icon class="icon" (click)="edit()">
         <i class="material-icons">mode_edit</i>
