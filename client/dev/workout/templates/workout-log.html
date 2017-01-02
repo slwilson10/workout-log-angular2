@@ -6,6 +6,13 @@
     </date-picker>
   </md-card>
   <md-card>
+    <workout-chart
+      [chartData]="filteredWorkouts"
+      [chartOptions]="column_ChartOptions"
+      chartType="ColumnChart">
+    </workout-chart>
+  </md-card>
+  <md-card>
     <workout-history
       [workouts]="filteredWorkouts"
       (onDelete)="delete($event)"
@@ -14,7 +21,7 @@
   </md-card>
   <md-card>
     <workout-creator
-      (onCreate)="create($event)"><
+      (onCreate)="create($event)">
     </workout-creator>
   </md-card>
 </div>

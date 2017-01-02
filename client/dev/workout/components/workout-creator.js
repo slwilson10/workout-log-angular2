@@ -17,20 +17,20 @@ var WorkoutCreator = (function () {
         this.onCreate = new core_1.EventEmitter();
         this.events = []; // use later to display form changes
         this.defaultWorkout = {
-            name: ['Workout', [forms_1.Validators.required, forms_1.Validators.minLength(1)]],
-            date: [moment().format('YYYY-MM-DD')],
-            duration: this._fb.group({
-                hours: [0],
-                minutes: [30]
-            }),
-            calories: [100],
-            distance: [0],
-            heartrate: [90],
-            zones: this._fb.group({
-                peak: [0],
-                cardio: [0],
-                fatburn: [0]
-            })
+            name: 'Workout',
+            date: moment().format('YYYY-MM-DD'),
+            duration: {
+                hours: 0,
+                minutes: 30
+            },
+            calories: 100,
+            distance: 0,
+            heartrate: 90,
+            zones: {
+                peak: 0,
+                cardio: 0,
+                fatburn: 0
+            }
         };
     } // form builder simplify form initialization
     WorkoutCreator.prototype.ngOnInit = function () {
@@ -52,7 +52,22 @@ var WorkoutCreator = (function () {
     // Set input text to blank
     WorkoutCreator.prototype.setForm = function (workout) {
         this.submitted = false;
-        this.myForm = this._fb.group(workout);
+        this.myForm = this._fb.group({
+            name: [workout.name, [forms_1.Validators.required, forms_1.Validators.minLength(1)]],
+            date: [moment(workout.date).format('YYYY-MM-DD')],
+            duration: this._fb.group({
+                hours: [workout.duration.hours],
+                minutes: [workout.duration.minutes]
+            }),
+            calories: [workout.calories],
+            distance: [workout.distance],
+            heartrate: [workout.heartrate],
+            zones: this._fb.group({
+                peak: [workout.zones.peak],
+                cardio: [workout.zones.cardio],
+                fatburn: [workout.zones.fatburn]
+            })
+        });
     };
     __decorate([
         core_1.Output(), 

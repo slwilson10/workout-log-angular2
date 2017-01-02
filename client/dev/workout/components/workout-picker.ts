@@ -11,35 +11,63 @@ import * as moment from 'moment';
 
 export class WorkoutPicker {
   @Output() onSetForm = new EventEmitter();
-  public myForm: FormGroup; // our model driven form
-  public events: any[] = []; // use later to display form changes
 
-  public runWorkout = {
-    name: ['Run', [<any>Validators.required, <any>Validators.minLength(1)]],
-    date: [moment().format('YYYY-MM-DD')],
-    duration: this._fb.group({
-      hours: [0],
-      minutes: [30]
-    }),
-    calories: [150],
-    distance: [3],
-    heartrate: [120],
-    zones: this._fb.group({
-      peak: [0],
-      cardio: [15],
-      fatburn: [15]
-    })
+  public walkWorkout = {
+    name: 'Walk',
+    date: moment().format(),
+    duration: {
+      hours: 0,
+      minutes: 30
+    },
+    calories: 90,
+    distance: 3,
+    heartrate: 70,
+    zones: {
+      peak: 0,
+      cardio: 15,
+      fatburn: 15
+    }
   };
 
-  constructor(private _fb: FormBuilder) {} // form builder simplify form initialization
+  public runWorkout = {
+    name: 'Run',
+    date: moment().format(),
+    duration: {
+      hours: 0,
+      minutes: 30
+    },
+    calories: 150,
+    distance: 3,
+    heartrate: 120,
+    zones: {
+      peak: 0,
+      cardio: 15,
+      fatburn: 15
+    }
+  };
+
+  public bikeWorkout = {
+    name: 'Bike',
+    date: moment().format(),
+    duration: {
+      hours: 1,
+      minutes: 30
+    },
+    calories: 200,
+    distance: 12,
+    heartrate: 100,
+    zones: {
+      peak: 0,
+      cardio: 1,
+      fatburn: 30
+    }
+  };
 
   ngOnInit() {}
 
   // Run save createWorkout event if form is valid, then reset
   pick(workout) {
-    console.log('Picking');
     this.onSetForm.next(workout);
-
   }
 
 }

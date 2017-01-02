@@ -8,49 +8,77 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require("@angular/core");
-var forms_1 = require("@angular/forms");
-var moment = require("moment");
+var core_1 = require('@angular/core');
+var moment = require('moment');
 var WorkoutPicker = (function () {
-    function WorkoutPicker(_fb) {
-        this._fb = _fb;
+    function WorkoutPicker() {
         this.onSetForm = new core_1.EventEmitter();
-        this.events = [];
+        this.walkWorkout = {
+            name: 'Walk',
+            date: moment().format(),
+            duration: {
+                hours: 0,
+                minutes: 30
+            },
+            calories: 90,
+            distance: 3,
+            heartrate: 70,
+            zones: {
+                peak: 0,
+                cardio: 15,
+                fatburn: 15
+            }
+        };
         this.runWorkout = {
-            name: ['Run', [forms_1.Validators.required, forms_1.Validators.minLength(1)]],
-            date: [moment().format('YYYY-MM-DD')],
-            duration: this._fb.group({
-                hours: [0],
-                minutes: [30]
-            }),
-            calories: [150],
-            distance: [3],
-            heartrate: [120],
-            zones: this._fb.group({
-                peak: [0],
-                cardio: [15],
-                fatburn: [15]
-            })
+            name: 'Run',
+            date: moment().format(),
+            duration: {
+                hours: 0,
+                minutes: 30
+            },
+            calories: 150,
+            distance: 3,
+            heartrate: 120,
+            zones: {
+                peak: 0,
+                cardio: 15,
+                fatburn: 15
+            }
+        };
+        this.bikeWorkout = {
+            name: 'Bike',
+            date: moment().format(),
+            duration: {
+                hours: 1,
+                minutes: 30
+            },
+            calories: 200,
+            distance: 12,
+            heartrate: 100,
+            zones: {
+                peak: 0,
+                cardio: 1,
+                fatburn: 30
+            }
         };
     }
     WorkoutPicker.prototype.ngOnInit = function () { };
+    // Run save createWorkout event if form is valid, then reset
     WorkoutPicker.prototype.pick = function (workout) {
-        console.log('Picking');
         this.onSetForm.next(workout);
     };
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', Object)
+    ], WorkoutPicker.prototype, "onSetForm", void 0);
+    WorkoutPicker = __decorate([
+        core_1.Component({
+            selector: 'workout-picker',
+            templateUrl: 'workout/templates/workout-picker.html',
+            styleUrls: ['workout/styles/workout-picker.css']
+        }), 
+        __metadata('design:paramtypes', [])
+    ], WorkoutPicker);
     return WorkoutPicker;
 }());
-__decorate([
-    core_1.Output(),
-    __metadata("design:type", Object)
-], WorkoutPicker.prototype, "onSetForm", void 0);
-WorkoutPicker = __decorate([
-    core_1.Component({
-        selector: 'workout-picker',
-        templateUrl: 'workout/templates/workout-picker.html',
-        styleUrls: ['workout/styles/workout-picker.css']
-    }),
-    __metadata("design:paramtypes", [forms_1.FormBuilder])
-], WorkoutPicker);
 exports.WorkoutPicker = WorkoutPicker;
-//# sourceMappingURL=workout-picker.js.map

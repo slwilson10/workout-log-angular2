@@ -1,3 +1,4 @@
+<md-card class="creator">
 <h3>Workout Creator</h3>
 <form [formGroup]="myForm" novalidate (ngSubmit)="create(myForm.value, myForm.valid)">
 <div class="form-group row">
@@ -66,9 +67,11 @@ Name is required (minimum 5 characters).
     <button class="btn btn-info" type="submit">Add</button>
   </div>
 </div>
-
 </form>
+</md-card>
 
+<md-card class="picker">
 <workout-picker
   (onSetForm)='setForm($event)'>
 </workout-picker>
+</md-card>
