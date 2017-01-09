@@ -7,8 +7,10 @@
   </md-card>
   <md-card>
     <workout-chart
-      [chartData]="filteredWorkouts"
-      [chartOptions]="column_ChartOptions"
+      id="workout-chart"
+      [dateRange] = "dateRange"
+      [chartData] = "filteredWorkouts"
+      [chartOptions] = "pie_ChartOptions"
       chartType="ColumnChart">
     </workout-chart>
   </md-card>

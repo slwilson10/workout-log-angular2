@@ -1,4 +1,8 @@
 import {Directive,ElementRef,Input,OnInit} from '@angular/core';
+import * as moment from 'moment';
+
+import { WorkoutModel } from '../store/workout-store';
+
 declare var google:any;
 declare var googleLoaded:any;
 
@@ -8,6 +12,7 @@ declare var googleLoaded:any;
 
 export class WorkoutChart implements OnInit {
   public _element:any;
+  @Input('dateRange') public dateRange: Object;
   @Input('chartType') public chartType:string;
   @Input('chartOptions') public chartOptions: Object;
   @Input('chartData') public chartData: Object;
@@ -17,34 +22,93 @@ export class WorkoutChart implements OnInit {
   }
 
   ngOnInit() {
-    // setTimeout(() =>{
-    //   google.charts.load('current', {'packages':['corechart']});
-    //     setTimeout(() =>{
-    //       this.drawGraph(this.chartOptions,this.chartType,this.chartData,this._element)
-    //     },1000);
-    //   },1000
-    // );
-    this.format(this.chartData);
+    google.charts.load('current', {'packages':['bar']});
   }
 
-  format(data) {
-    console.log(data);
-    return [
+  formatData(dateRange, chartData){
+    let dataArray = [];
+    let startDate = moment(dateRange.startDate);
+    let endDate = moment(dateRange.endDate);
+    let daysInRange = endDate.diff(startDate, 'days');
 
-    ];
-  }
+    // Check if datRange is longer than a week
+    if(daysInRange <= 8) {
+      // Put all dates in range inside an array
+      let rangeDatesArray = []
+      let date = moment(startDate).format('YYYY-MM-DD');
+      for (let i = 0; i < daysInRange; i++) {
+        rangeDatesArray.push(date);
+        date = moment(date).add(1, 'days').format('YYYY-MM-DD');
+      }
 
-  drawGraph (chartOptions,chartType,chartData,ele) {
-    google.charts.setOnLoadCallback(drawChart);
-    function drawChart() {
-      var wrapper;
-      wrapper = new google.visualization.ChartWrapper({
-        chartType: chartType,
-        dataTable:chartData ,
-        options:chartOptions || {},
-        containerId: ele.id
-      });
-      wrapper.draw();
+      // Loop through array of dates in range
+      for (let d in rangeDatesArray) {
+        let found = false;  // Variable to keep track if match was found
+        // Loop through workouts
+        for (let w in chartData) {
+          // Check if the current date and workout date match
+          if (rangeDatesArray[d] == moment(chartData[w].date).format('YYYY-MM-DD')){
+            // Add workout data to dataArray
+            dataArray.push([moment(chartData[w].date)
+              .format('M/D/YYYY'), chartData[w].calories]);
+            found = true;
+          }
+        }
+        // Create blank entry for non matching dates
+        if(found == false){
+          dataArray.push([moment(rangeDatesArray[d])
+            .format('M/D/YYYY'), 0]);
+        }
+      }
     }
+    // If dateRange is longer than a week
+    else {
+      // Loop through workouts and add them into dataArray
+      for (let w in chartData) {
+        dataArray.push([moment(chartData[w].date)
+          .format('M/D/YYYY'), chartData[w].calories]);
+      }
+    }
+
+    return dataArray;
+  }
+
+  // Set hAxis length based on number of workouts
+  getHTextLength(data) {
+      let hTextLength = 1;
+      if(data.length < 9){
+          hTextLength = 1;
+      }else if (data.length > 9 && data.length < 32){
+          hTextLength = 2;
+      }else{
+          hTextLength = 10;
+      }
+      return hTextLength
+  }
+
+  drawChart(dateRange, data) {
+    let _data = new google.visualization.DataTable();
+    _data.addColumn('string', 'Date');
+    _data.addColumn('number', 'Calories');
+    _data.addRows(this.formatData(dateRange, data));
+    _data.sort({column: 0});
+
+    let options = {
+      title: "",
+      width: 900,
+      height: 400,
+      legend: { position: "none" },
+      chartArea: {'width': '80%', 'height': '80%'},
+      hAxis:{
+        showTextEvery: this.getHTextLength(data),
+      },
+    };
+
+    let chart = new google.visualization.ColumnChart(document.getElementById('workout-chart'));
+    chart.draw(_data, options);
+  };
+
+  drawGraph (dateRange, data) {
+    google.charts.setOnLoadCallback(this.drawChart(dateRange, data));
   }
 }

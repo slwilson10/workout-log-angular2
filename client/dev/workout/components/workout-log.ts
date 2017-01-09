@@ -1,7 +1,11 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { ViewChild, AfterViewInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+
 import { WorkoutModel } from '../store/workout-store';
 import { WorkoutService } from '../services/workout-service';
+import { WorkoutChart } from '../components/workout-chart';
+
 import * as moment from 'moment';
 
 @Component({
@@ -11,9 +15,13 @@ import * as moment from 'moment';
 })
 
 export class WorkoutLog implements OnInit {
+
+  @ViewChild(WorkoutChart)
+  private chartComp: WorkoutChart;
+
   // Create empty array for workouts
-  workouts: WorkoutModel[] = [];
-  filteredWorkouts: WorkoutModel[] = [];
+  public workouts: WorkoutModel[] = [];
+  public filteredWorkouts: WorkoutModel[] = [];
   public dateRange= {
     'startDate': moment().subtract(7,'days').format(),
     'endDate': moment().add(1,'days').format()
@@ -22,6 +30,10 @@ export class WorkoutLog implements OnInit {
 
   ngOnInit() {
     this._getAll();
+    // setTimeout(() =>{
+    //   this.chartComp.drawGraph(this.dateRange, this.filteredWorkouts)
+    // },2000);
+
   }
 
   // Populate workouts through service, set dateRange
@@ -75,6 +87,10 @@ export class WorkoutLog implements OnInit {
         })
   }
 
+  setChart(){
+    this.chartComp.drawGraph(this.dateRange, this.filteredWorkouts);
+  }
+
   // Loop through all workouts, pull those inside of dateRange
   // Set parent component's dateRange to passed value
   setDateRange(dateRange):void {
@@ -85,5 +101,6 @@ export class WorkoutLog implements OnInit {
       }
     }
     this.dateRange = dateRange;
+    this.setChart();
   }
 }

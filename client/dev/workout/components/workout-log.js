@@ -9,7 +9,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var core_2 = require('@angular/core');
 var workout_service_1 = require('../services/workout-service');
+var workout_chart_1 = require('../components/workout-chart');
 var moment = require('moment');
 var WorkoutLog = (function () {
     function WorkoutLog(_workoutService) {
@@ -24,6 +26,9 @@ var WorkoutLog = (function () {
     }
     WorkoutLog.prototype.ngOnInit = function () {
         this._getAll();
+        // setTimeout(() =>{
+        //   this.chartComp.drawGraph(this.dateRange, this.filteredWorkouts)
+        // },2000);
     };
     // Populate workouts through service, set dateRange
     WorkoutLog.prototype._getAll = function () {
@@ -76,6 +81,9 @@ var WorkoutLog = (function () {
             _this.setDateRange(_this.dateRange);
         });
     };
+    WorkoutLog.prototype.setChart = function () {
+        this.chartComp.drawGraph(this.dateRange, this.filteredWorkouts);
+    };
     // Loop through all workouts, pull those inside of dateRange
     // Set parent component's dateRange to passed value
     WorkoutLog.prototype.setDateRange = function (dateRange) {
@@ -87,7 +95,12 @@ var WorkoutLog = (function () {
             }
         }
         this.dateRange = dateRange;
+        this.setChart();
     };
+    __decorate([
+        core_2.ViewChild(workout_chart_1.WorkoutChart), 
+        __metadata('design:type', workout_chart_1.WorkoutChart)
+    ], WorkoutLog.prototype, "chartComp", void 0);
     WorkoutLog = __decorate([
         core_1.Component({
             selector: 'workout-log',

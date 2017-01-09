@@ -29,7 +29,7 @@ var DatePicker = (function () {
     DatePicker.prototype.dateButtonClick = function (date) {
         this.setDateRange({
             'startDate': date,
-            'endDate': this.curDate
+            'endDate': moment(this.curDate).add(1, 'days').format()
         });
         this.setCalendarPicker(date, this.curDate);
     };
