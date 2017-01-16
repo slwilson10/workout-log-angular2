@@ -10,10 +10,12 @@
       <md-grid-tile></md-grid-tile>
       <md-grid-tile colspan="2">&nbsp;</md-grid-tile>
 </md-grid-list>
-<div *ngFor="let workout of workouts | orderBy : ['date']; let i = index">
-    <workout-row
-      [workout]= 'workout'
-      (onUpdate)="update($event)"
-      (onDelete)="delete($event)">
-    </workout-row>
+<div class='list'>
+  <div *ngFor="let workout of workouts | orderBy : ['-date']; let i = index">
+      <workout-row
+        [workout]= 'workout'
+        (onUpdate)="update($event)"
+        (onDelete)="delete($event)">
+      </workout-row>
+  </div>
 </div>

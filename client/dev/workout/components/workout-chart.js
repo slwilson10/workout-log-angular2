@@ -18,11 +18,22 @@ var WorkoutChart = (function () {
     WorkoutChart.prototype.ngOnInit = function () {
         google.charts.load('current', { 'packages': ['bar'] });
     };
-    WorkoutChart.prototype.formatData = function (dateRange, chartData) {
+    WorkoutChart.prototype.formatData = function (dateRange, dataType, chartData) {
         var dataArray = [];
         var startDate = moment(dateRange.startDate);
         var endDate = moment(dateRange.endDate);
         var daysInRange = endDate.diff(startDate, 'days');
+        function setDataType(data, type) {
+            if (type == 'duration') {
+                data = moment.duration({
+                    minutes: data.duration[0].minutes, hours: data.duration[0].hours
+                }).asMinutes();
+                return data;
+            }
+            else {
+                return data[type];
+            }
+        }
         // Check if datRange is longer than a week
         if (daysInRange <= 8) {
             // Put all dates in range inside an array
@@ -41,14 +52,14 @@ var WorkoutChart = (function () {
                     if (rangeDatesArray[d] == moment(chartData[w].date).format('YYYY-MM-DD')) {
                         // Add workout data to dataArray
                         dataArray.push([moment(chartData[w].date)
-                                .format('M/D/YYYY'), chartData[w].calories]);
+                                .format('MM/DD/YYYY'), setDataType(chartData[w], dataType)]);
                         found = true;
                     }
                 }
                 // Create blank entry for non matching dates
                 if (found == false) {
                     dataArray.push([moment(rangeDatesArray[d])
-                            .format('M/D/YYYY'), 0]);
+                            .format('MM/DD/YYYY'), 0]);
                 }
             }
         }
@@ -56,7 +67,7 @@ var WorkoutChart = (function () {
             // Loop through workouts and add them into dataArray
             for (var w in chartData) {
                 dataArray.push([moment(chartData[w].date)
-                        .format('M/D/YYYY'), chartData[w].calories]);
+                        .format('MM/DD/YYYY'), setDataType(chartData[w], dataType)]);
             }
         }
         return dataArray;
@@ -68,18 +79,28 @@ var WorkoutChart = (function () {
             hTextLength = 1;
         }
         else if (data.length > 9 && data.length < 32) {
-            hTextLength = 2;
+            hTextLength = 4;
         }
         else {
             hTextLength = 10;
         }
         return hTextLength;
     };
-    WorkoutChart.prototype.drawChart = function (dateRange, data) {
+    WorkoutChart.prototype.getBarColor = function (dataType) {
+        var color = 'blue';
+        if (dataType == 'heartrate') {
+            color = 'yellow';
+        }
+        else if (dataType == 'duration') {
+            color = 'orange';
+        }
+        return color;
+    };
+    WorkoutChart.prototype.drawChart = function (dateRange, dataType, data) {
         var _data = new google.visualization.DataTable();
         _data.addColumn('string', 'Date');
         _data.addColumn('number', 'Calories');
-        _data.addRows(this.formatData(dateRange, data));
+        _data.addRows(this.formatData(dateRange, dataType, data));
         _data.sort({ column: 0 });
         var options = {
             title: "",
@@ -90,13 +111,14 @@ var WorkoutChart = (function () {
             hAxis: {
                 showTextEvery: this.getHTextLength(data),
             },
+            colors: [this.getBarColor(dataType)],
         };
         var chart = new google.visualization.ColumnChart(document.getElementById('workout-chart'));
         chart.draw(_data, options);
     };
     ;
-    WorkoutChart.prototype.drawGraph = function (dateRange, data) {
-        google.charts.setOnLoadCallback(this.drawChart(dateRange, data));
+    WorkoutChart.prototype.drawGraph = function (dateRange, dataType, data) {
+        google.charts.setOnLoadCallback(this.drawChart(dateRange, dataType, data));
     };
     __decorate([
         core_1.Input('dateRange'), 

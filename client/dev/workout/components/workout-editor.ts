@@ -31,6 +31,8 @@ export class WorkoutEditor {
 
         if(isValid){
           console.log('Editor: ' + model);
+          // Edit date of model to be start of passed date
+          model.date = moment(model.date).startOf('day').format();
           this.onUpdate.next(model);
           this.reset();
         }
@@ -46,7 +48,7 @@ export class WorkoutEditor {
     this.myForm = this._fb.group({
             id: [this.workout._id],
             name: [this.workout.name, [<any>Validators.required, <any>Validators.minLength(1)]],
-            date: [moment(this.workout.date).format('YYYY-MM-DD')],
+            date: [moment(this.workout.date).startOf('day').format('YYYY-MM-DD')],
             duration: this._fb.group({
                 hours: [this.workout.duration[0].hours],
                 minutes: [this.workout.duration[0].minutes]

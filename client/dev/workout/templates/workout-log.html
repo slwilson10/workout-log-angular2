@@ -6,6 +6,9 @@
     </date-picker>
   </md-card>
   <md-card>
+    <data-picker
+      (onSetDataType)="setDataType($event)">
+    </data-picker>
     <workout-chart
       id="workout-chart"
       [dateRange] = "dateRange"

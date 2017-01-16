@@ -23,17 +23,15 @@ export class WorkoutLog implements OnInit {
   public workouts: WorkoutModel[] = [];
   public filteredWorkouts: WorkoutModel[] = [];
   public dateRange= {
-    'startDate': moment().subtract(7,'days').format(),
-    'endDate': moment().add(1,'days').format()
+    'startDate': moment().subtract(7,'days').startOf('day').format(),
+    'endDate': moment().add(1,'days').endOf('day').format()
   };
+  public dataType = 'calories';
+
   constructor(private _workoutService: WorkoutService) {}
 
   ngOnInit() {
     this._getAll();
-    // setTimeout(() =>{
-    //   this.chartComp.drawGraph(this.dateRange, this.filteredWorkouts)
-    // },2000);
-
   }
 
   // Populate workouts through service, set dateRange
@@ -48,7 +46,7 @@ export class WorkoutLog implements OnInit {
 
   // Create new workout through service
   create(workout):void {
-    console.log('creating: ' + workout);
+    console.log('Creating: ' + workout);
     this._workoutService
         .create(workout)
         .subscribe((n) => {
@@ -88,7 +86,7 @@ export class WorkoutLog implements OnInit {
   }
 
   setChart(){
-    this.chartComp.drawGraph(this.dateRange, this.filteredWorkouts);
+    this.chartComp.drawGraph(this.dateRange, this.dataType, this.filteredWorkouts);
   }
 
   // Loop through all workouts, pull those inside of dateRange
@@ -101,6 +99,11 @@ export class WorkoutLog implements OnInit {
       }
     }
     this.dateRange = dateRange;
+    this.setChart();
+  }
+
+  setDataType(data){
+    this.dataType = data;
     this.setChart();
   }
 }

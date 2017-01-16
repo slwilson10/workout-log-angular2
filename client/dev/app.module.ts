@@ -9,6 +9,7 @@ import { WorkoutService }   from './workout/services/workout-service';
 
 import { NavBar } from './workout/components/nav-bar';
 import { DatePicker } from './workout/components/date-picker';
+import { DataPicker } from './workout/components/data-picker';
 import { WorkoutChart } from './workout/components/workout-chart';
 import { WorkoutCreator } from './workout/components/workout-creator';
 import { WorkoutPicker } from './workout/components/workout-picker';
@@ -32,6 +33,7 @@ import { OrderBy } from './workout/pipes/orderBy';
       WorkoutLog,
       NavBar,
       DatePicker,
+      DataPicker,
       WorkoutChart,
       WorkoutCreator,
       WorkoutPicker,

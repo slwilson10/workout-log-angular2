@@ -9,3 +9,8 @@ h5 {
 md-grid-tile {
   font-weight: bold;
 }
+
+.list {
+  max-height: 400px;
+  overflow-y: scroll;
+}

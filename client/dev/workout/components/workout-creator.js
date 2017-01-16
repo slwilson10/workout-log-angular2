@@ -41,10 +41,8 @@ var WorkoutCreator = (function () {
         console.log('Creating');
         this.submitted = true;
         if (isValid) {
-            // Set date to datetime using current time and timezone
-            var dateTime = moment(model.date).format('YYYY-MM-DD') + 'T' +
-                moment().format('HH:mm:ssZ');
-            model.date = dateTime;
+            // Set date to datetime using passed startOf day
+            model.date = moment(model.date).startOf('day').format();
             this.onCreate.next(model);
             this.setForm(this.defaultWorkout);
         }

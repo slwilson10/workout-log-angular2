@@ -11,7 +11,7 @@ const _workoutSchema = {
   }],
   calories: { type: Number },
   distance: { type: Number },
-  heartrate: { type: String },
+  heartrate: { type: Number },
   zones: [{
     peak: Number,
     cardio: Number,

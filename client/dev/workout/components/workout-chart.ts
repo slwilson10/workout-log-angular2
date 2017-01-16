@@ -25,11 +25,20 @@ export class WorkoutChart implements OnInit {
     google.charts.load('current', {'packages':['bar']});
   }
 
-  formatData(dateRange, chartData){
+  formatData(dateRange, dataType, chartData){
     let dataArray = [];
     let startDate = moment(dateRange.startDate);
     let endDate = moment(dateRange.endDate);
     let daysInRange = endDate.diff(startDate, 'days');
+
+    function setDataType(data, type) {
+      if(type == 'duration'){
+        data = moment.duration({
+          minutes: data.duration[0].minutes,hours: data.duration[0].hours
+        }).asMinutes()
+        return data
+      } else { return data[type] }
+    }
 
     // Check if datRange is longer than a week
     if(daysInRange <= 8) {
@@ -50,14 +59,14 @@ export class WorkoutChart implements OnInit {
           if (rangeDatesArray[d] == moment(chartData[w].date).format('YYYY-MM-DD')){
             // Add workout data to dataArray
             dataArray.push([moment(chartData[w].date)
-              .format('M/D/YYYY'), chartData[w].calories]);
+              .format('MM/DD/YYYY'), setDataType(chartData[w], dataType)]);
             found = true;
           }
         }
         // Create blank entry for non matching dates
         if(found == false){
           dataArray.push([moment(rangeDatesArray[d])
-            .format('M/D/YYYY'), 0]);
+            .format('MM/DD/YYYY'), 0]);
         }
       }
     }
@@ -66,7 +75,7 @@ export class WorkoutChart implements OnInit {
       // Loop through workouts and add them into dataArray
       for (let w in chartData) {
         dataArray.push([moment(chartData[w].date)
-          .format('M/D/YYYY'), chartData[w].calories]);
+          .format('MM/DD/YYYY'), setDataType(chartData[w], dataType)]);
       }
     }
 
@@ -79,18 +88,28 @@ export class WorkoutChart implements OnInit {
       if(data.length < 9){
           hTextLength = 1;
       }else if (data.length > 9 && data.length < 32){
-          hTextLength = 2;
+          hTextLength = 4;
       }else{
           hTextLength = 10;
       }
-      return hTextLength
+      return hTextLength;
   }
 
-  drawChart(dateRange, data) {
+  getBarColor(dataType){
+    let color = 'blue';
+    if(dataType == 'heartrate'){
+        color = 'yellow';
+    }else if (dataType == 'duration'){
+        color = 'orange';
+    }
+    return color;
+  }
+
+  drawChart(dateRange, dataType, data) {
     let _data = new google.visualization.DataTable();
     _data.addColumn('string', 'Date');
     _data.addColumn('number', 'Calories');
-    _data.addRows(this.formatData(dateRange, data));
+    _data.addRows(this.formatData(dateRange, dataType, data));
     _data.sort({column: 0});
 
     let options = {
@@ -102,13 +121,14 @@ export class WorkoutChart implements OnInit {
       hAxis:{
         showTextEvery: this.getHTextLength(data),
       },
+      colors:[this.getBarColor(dataType)],
     };
 
     let chart = new google.visualization.ColumnChart(document.getElementById('workout-chart'));
     chart.draw(_data, options);
   };
 
-  drawGraph (dateRange, data) {
-    google.charts.setOnLoadCallback(this.drawChart(dateRange, data));
+  drawGraph (dateRange, dataType, data) {
+    google.charts.setOnLoadCallback(this.drawChart(dateRange, dataType, data));
   }
 }

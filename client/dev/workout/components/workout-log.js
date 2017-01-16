@@ -20,15 +20,13 @@ var WorkoutLog = (function () {
         this.workouts = [];
         this.filteredWorkouts = [];
         this.dateRange = {
-            'startDate': moment().subtract(7, 'days').format(),
-            'endDate': moment().add(1, 'days').format()
+            'startDate': moment().subtract(7, 'days').startOf('day').format(),
+            'endDate': moment().add(1, 'days').endOf('day').format()
         };
+        this.dataType = 'calories';
     }
     WorkoutLog.prototype.ngOnInit = function () {
         this._getAll();
-        // setTimeout(() =>{
-        //   this.chartComp.drawGraph(this.dateRange, this.filteredWorkouts)
-        // },2000);
     };
     // Populate workouts through service, set dateRange
     WorkoutLog.prototype._getAll = function () {
@@ -43,7 +41,7 @@ var WorkoutLog = (function () {
     // Create new workout through service
     WorkoutLog.prototype.create = function (workout) {
         var _this = this;
-        console.log('creating: ' + workout);
+        console.log('Creating: ' + workout);
         this._workoutService
             .create(workout)
             .subscribe(function (n) {
@@ -82,7 +80,7 @@ var WorkoutLog = (function () {
         });
     };
     WorkoutLog.prototype.setChart = function () {
-        this.chartComp.drawGraph(this.dateRange, this.filteredWorkouts);
+        this.chartComp.drawGraph(this.dateRange, this.dataType, this.filteredWorkouts);
     };
     // Loop through all workouts, pull those inside of dateRange
     // Set parent component's dateRange to passed value
@@ -95,6 +93,10 @@ var WorkoutLog = (function () {
             }
         }
         this.dateRange = dateRange;
+        this.setChart();
+    };
+    WorkoutLog.prototype.setDataType = function (data) {
+        this.dataType = data;
         this.setChart();
     };
     __decorate([
