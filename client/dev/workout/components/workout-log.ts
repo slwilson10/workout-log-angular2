@@ -34,7 +34,7 @@ export class WorkoutLog implements OnInit {
     this._getAll();
   }
 
-  // Populate workouts through service, set dateRange
+  // Populate workouts through service, run setDateRange function
   private _getAll():void {
     this._workoutService
         .getAll()
@@ -85,6 +85,7 @@ export class WorkoutLog implements OnInit {
         })
   }
 
+  // Run drawChart on child component
   setChart(){
     this.chartComp.drawGraph(this.dateRange, this.dataType, this.filteredWorkouts);
   }
@@ -98,12 +99,13 @@ export class WorkoutLog implements OnInit {
         this.filteredWorkouts.push(w);
       }
     }
-    this.dateRange = dateRange;
-    this.setChart();
+    this.dateRange = dateRange; // Update dateRange for all components
+    this.setChart(); // Redraw chart after date change
   }
 
+  // Change dataType passed to chart on button click
   setDataType(data){
-    this.dataType = data;
-    this.setChart();
+    this.dataType = data; // Update dateType for all components
+    this.setChart(); // Redraw chart after dataType change
   }
 }

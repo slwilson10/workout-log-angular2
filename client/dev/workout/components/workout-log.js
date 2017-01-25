@@ -8,15 +8,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var core_2 = require('@angular/core');
-var workout_service_1 = require('../services/workout-service');
-var workout_chart_1 = require('../components/workout-chart');
-var moment = require('moment');
+var core_1 = require("@angular/core");
+var core_2 = require("@angular/core");
+var workout_service_1 = require("../services/workout-service");
+var workout_chart_1 = require("../components/workout-chart");
+var moment = require("moment");
 var WorkoutLog = (function () {
     function WorkoutLog(_workoutService) {
         this._workoutService = _workoutService;
-        // Create empty array for workouts
         this.workouts = [];
         this.filteredWorkouts = [];
         this.dateRange = {
@@ -28,7 +27,6 @@ var WorkoutLog = (function () {
     WorkoutLog.prototype.ngOnInit = function () {
         this._getAll();
     };
-    // Populate workouts through service, set dateRange
     WorkoutLog.prototype._getAll = function () {
         var _this = this;
         this._workoutService
@@ -38,7 +36,6 @@ var WorkoutLog = (function () {
             _this.setDateRange(_this.dateRange);
         });
     };
-    // Create new workout through service
     WorkoutLog.prototype.create = function (workout) {
         var _this = this;
         console.log('Creating: ' + workout);
@@ -49,7 +46,6 @@ var WorkoutLog = (function () {
             _this.setDateRange(_this.dateRange);
         });
     };
-    // Update model through service call, update model in components
     WorkoutLog.prototype.update = function (workout) {
         var _this = this;
         console.log('Updating: ' + workout);
@@ -64,7 +60,6 @@ var WorkoutLog = (function () {
             _this.setDateRange(_this.dateRange);
         });
     };
-    // Delete through service call, update models and dateRange
     WorkoutLog.prototype.delete = function (id) {
         var _this = this;
         console.log('Deleting: ' + id);
@@ -82,10 +77,8 @@ var WorkoutLog = (function () {
     WorkoutLog.prototype.setChart = function () {
         this.chartComp.drawGraph(this.dateRange, this.dataType, this.filteredWorkouts);
     };
-    // Loop through all workouts, pull those inside of dateRange
-    // Set parent component's dateRange to passed value
     WorkoutLog.prototype.setDateRange = function (dateRange) {
-        this.filteredWorkouts = []; // Clear array before adding new
+        this.filteredWorkouts = [];
         for (var _i = 0, _a = this.workouts; _i < _a.length; _i++) {
             var w = _a[_i];
             if (w.date >= dateRange.startDate && w.date <= dateRange.endDate) {
@@ -99,18 +92,19 @@ var WorkoutLog = (function () {
         this.dataType = data;
         this.setChart();
     };
-    __decorate([
-        core_2.ViewChild(workout_chart_1.WorkoutChart), 
-        __metadata('design:type', workout_chart_1.WorkoutChart)
-    ], WorkoutLog.prototype, "chartComp", void 0);
-    WorkoutLog = __decorate([
-        core_1.Component({
-            selector: 'workout-log',
-            templateUrl: 'workout/templates/workout-log.html',
-            styleUrls: ['workout/styles/workout-log.css']
-        }), 
-        __metadata('design:paramtypes', [workout_service_1.WorkoutService])
-    ], WorkoutLog);
     return WorkoutLog;
 }());
+__decorate([
+    core_2.ViewChild(workout_chart_1.WorkoutChart),
+    __metadata("design:type", workout_chart_1.WorkoutChart)
+], WorkoutLog.prototype, "chartComp", void 0);
+WorkoutLog = __decorate([
+    core_1.Component({
+        selector: 'workout-log',
+        templateUrl: 'workout/templates/workout-log.html',
+        styleUrls: ['workout/styles/workout-log.css']
+    }),
+    __metadata("design:paramtypes", [workout_service_1.WorkoutService])
+], WorkoutLog);
 exports.WorkoutLog = WorkoutLog;
+//# sourceMappingURL=workout-log.js.map

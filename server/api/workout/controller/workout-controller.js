@@ -12,7 +12,6 @@ module.exports = class WorkoutController {
 
   static createWorkout(req, res) {
       let _workout = req.body;
-
       WorkoutDAO
         .createWorkout(_workout)
         .then(workout => res.status(201).json(workout))

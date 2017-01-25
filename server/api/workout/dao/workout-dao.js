@@ -8,7 +8,6 @@ const _ = require('lodash');
 workoutSchema.statics.getAll = () => {
     return new Promise((resolve, reject) => {
         let _query = {};
-
         Workout
           .find(_query)
           .exec((err, workouts) => {

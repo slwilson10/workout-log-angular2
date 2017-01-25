@@ -21,14 +21,12 @@ export class WorkoutEditor {
   constructor(private _fb: FormBuilder) { } // form builder simplify form initialization
 
   ngOnInit() {
-      console.log(this.workout._id);
       this.reset();
   }
 
   // Run save createWorkout event if form is valid, then reset
   update(model: WorkoutModel, isValid: boolean) {
         this.submitted = true;
-
         if(isValid){
           console.log('Editor: ' + model);
           // Edit date of model to be start of passed date
@@ -36,11 +34,11 @@ export class WorkoutEditor {
           this.onUpdate.next(model);
           this.reset();
         }
-    }
+  }
 
-    edit(){
-      this.onEdit.next();
-    }
+  edit(){
+    this.onEdit.next();
+  }
 
   // Set input text to passed in workout
   reset() {

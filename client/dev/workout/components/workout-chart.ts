@@ -25,13 +25,16 @@ export class WorkoutChart implements OnInit {
     google.charts.load('current', {'packages':['bar']});
   }
 
+  // Recieve data and format to fit chart requirements
   formatData(dateRange, dataType, chartData){
     let dataArray = [];
     let startDate = moment(dateRange.startDate);
     let endDate = moment(dateRange.endDate);
     let daysInRange = endDate.diff(startDate, 'days');
 
+    // Return passed data type
     function setDataType(data, type) {
+      // If type is duration, return as combined minutes
       if(type == 'duration'){
         data = moment.duration({
           minutes: data.duration[0].minutes,hours: data.duration[0].hours
@@ -78,11 +81,10 @@ export class WorkoutChart implements OnInit {
           .format('MM/DD/YYYY'), setDataType(chartData[w], dataType)]);
       }
     }
-
     return dataArray;
   }
 
-  // Set hAxis length based on number of workouts
+  // Set hAxis length based on number of workouts shown in chart
   getHTextLength(data) {
       let hTextLength = 1;
       if(data.length < 9){
@@ -95,6 +97,7 @@ export class WorkoutChart implements OnInit {
       return hTextLength;
   }
 
+  // Set chart bar color based on type of data
   getBarColor(dataType){
     let color = 'blue';
     if(dataType == 'heartrate'){
@@ -105,6 +108,7 @@ export class WorkoutChart implements OnInit {
     return color;
   }
 
+  // Set up chart for drawing
   drawChart(dateRange, dataType, data) {
     let _data = new google.visualization.DataTable();
     _data.addColumn('string', 'Date');
@@ -128,6 +132,7 @@ export class WorkoutChart implements OnInit {
     chart.draw(_data, options);
   };
 
+  // Main chart drawing function
   drawGraph (dateRange, dataType, data) {
     google.charts.setOnLoadCallback(this.drawChart(dateRange, dataType, data));
   }

@@ -8,26 +8,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var forms_1 = require('@angular/forms');
-var moment = require('moment');
+var core_1 = require("@angular/core");
+var forms_1 = require("@angular/forms");
+var moment = require("moment");
 var WorkoutEditor = (function () {
     function WorkoutEditor(_fb) {
         this._fb = _fb;
         this.onUpdate = new core_1.EventEmitter();
         this.onEdit = new core_1.EventEmitter();
-        this.events = []; // use later to display form changes
-    } // form builder simplify form initialization
+        this.events = [];
+    }
     WorkoutEditor.prototype.ngOnInit = function () {
-        console.log(this.workout._id);
         this.reset();
     };
-    // Run save createWorkout event if form is valid, then reset
     WorkoutEditor.prototype.update = function (model, isValid) {
         this.submitted = true;
         if (isValid) {
             console.log('Editor: ' + model);
-            // Edit date of model to be start of passed date
             model.date = moment(model.date).startOf('day').format();
             this.onUpdate.next(model);
             this.reset();
@@ -36,7 +33,6 @@ var WorkoutEditor = (function () {
     WorkoutEditor.prototype.edit = function () {
         this.onEdit.next();
     };
-    // Set input text to passed in workout
     WorkoutEditor.prototype.reset = function () {
         this.submitted = false;
         this.myForm = this._fb.group({
@@ -57,26 +53,27 @@ var WorkoutEditor = (function () {
             }),
         });
     };
-    __decorate([
-        core_1.Input(), 
-        __metadata('design:type', Object)
-    ], WorkoutEditor.prototype, "workout", void 0);
-    __decorate([
-        core_1.Output(), 
-        __metadata('design:type', Object)
-    ], WorkoutEditor.prototype, "onUpdate", void 0);
-    __decorate([
-        core_1.Output(), 
-        __metadata('design:type', Object)
-    ], WorkoutEditor.prototype, "onEdit", void 0);
-    WorkoutEditor = __decorate([
-        core_1.Component({
-            selector: 'workout-editor',
-            templateUrl: 'workout/templates/workout-editor.html',
-            styleUrls: ['workout/styles/workout-editor.css']
-        }), 
-        __metadata('design:paramtypes', [forms_1.FormBuilder])
-    ], WorkoutEditor);
     return WorkoutEditor;
 }());
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Object)
+], WorkoutEditor.prototype, "workout", void 0);
+__decorate([
+    core_1.Output(),
+    __metadata("design:type", Object)
+], WorkoutEditor.prototype, "onUpdate", void 0);
+__decorate([
+    core_1.Output(),
+    __metadata("design:type", Object)
+], WorkoutEditor.prototype, "onEdit", void 0);
+WorkoutEditor = __decorate([
+    core_1.Component({
+        selector: 'workout-editor',
+        templateUrl: 'workout/templates/workout-editor.html',
+        styleUrls: ['workout/styles/workout-editor.css']
+    }),
+    __metadata("design:paramtypes", [forms_1.FormBuilder])
+], WorkoutEditor);
 exports.WorkoutEditor = WorkoutEditor;
+//# sourceMappingURL=workout-editor.js.map
