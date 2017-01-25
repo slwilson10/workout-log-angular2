@@ -1,0 +1,15 @@
+.icon {
+  cursor: pointer;
+}
+
+md-grid-list {
+  border-bottom: 1px solid LightGrey;
+}
+
+.name {
+  text-align: center;
+}
+
+table {
+  width: 50%;
+}

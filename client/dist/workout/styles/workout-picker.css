@@ -1,0 +1,13 @@
+.icon {
+  display: inline-block;
+  width: 25%;
+  font-size: 50px;
+  cursor: pointer;
+  -moz-appearance:none; /* Firefox */
+  -webkit-appearance:none; /* Safari and Chrome */
+  appearance:none;
+}
+
+i {
+  font-size: 50px;
+}

@@ -1,0 +1,16 @@
+md-grid-list {
+  border-bottom: 2px solid LightGrey;
+}
+
+h5 {
+  margin: 0;
+}
+
+md-grid-tile {
+  font-weight: bold;
+}
+
+.list {
+  max-height: 400px;
+  overflow-y: scroll;
+}

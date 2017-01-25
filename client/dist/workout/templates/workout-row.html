@@ -1,0 +1,1 @@
+<workout *ngIf="editing == false" [workout]="workout" (onDelete)="delete($event)" (onEdit)="edit()"></workout><workout-editor *ngIf="editing" [workout]="workout" (onUpdate)="update($event)" (onEdit)="edit()"></workout-editor>
